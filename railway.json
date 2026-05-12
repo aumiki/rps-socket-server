@@ -3,7 +3,7 @@
     "builder": "NIXPACKS"
   },
   "deploy": {
-    "startCommand": "npx prisma generate && npx prisma db push --accept-data-loss && node server.js",
+    "startCommand": "npx prisma generate --schema=schema.prisma && npx prisma db push --schema=schema.prisma && node server.js",
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 3
   }

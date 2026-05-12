@@ -1,25 +1,9 @@
-import { io } from "socket.io-client";
+// ⚠️  FILE INI TIDAK DIGUNAKAN DI RAILWAY SERVER
+//
+// File socket.js ini adalah sisa dari kode frontend (socket.io-client ESM).
+// Railway server adalah standalone Node.js — semua logika socket
+// sudah ada di server.js (menggunakan socket.io SERVER, bukan client).
+//
+// File ini aman untuk dihapus dari repo server ini.
 
-let socket = null;
-
-export function getSocket() {
-  if (!socket) {
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
-    socket = io(process.env.NEXT_PUBLIC_SOCKET_URL || process.env.NEXT_PUBLIC_APP_URL || "", {
-      path: "/api/socket",
-      auth: { token },
-      autoConnect: false,
-    });
-  }
-  return socket;
-}
-
-export function connectSocket() {
-  const s = getSocket();
-  if (!s.connected) s.connect();
-  return s;
-}
-
-export function disconnectSocket() {
-  if (socket?.connected) socket.disconnect();
-}
+module.exports = {}; // placeholder agar tidak error jika tidak sengaja di-require

@@ -115,16 +115,22 @@ function sanitizeState(state) {
 }
 
 const httpServer = createServer((req, res) => {
+  // Health check endpoint — digunakan Railway untuk memastikan server hidup
   res.writeHead(200, { "Content-Type": "application/json" });
-  res.end(JSON.stringify({ status: "JANKEN Socket Server running" }));
+  res.end(JSON.stringify({ status: "JANKEN Socket Server running", timestamp: new Date().toISOString() }));
 });
+
+// CORS_ORIGIN = URL Vercel website kamu (set di Railway environment variables)
+// Contoh: https://rps-game.vercel.app
+const allowedOrigin = process.env.CORS_ORIGIN || process.env.NEXT_PUBLIC_APP_URL || "*";
+console.log(`[CORS] Allowed origin: ${allowedOrigin}`);
 
 const io = new Server(httpServer, {
   path: "/api/socket",
   cors: {
-    origin: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
+    origin: allowedOrigin,
     methods: ["GET", "POST"],
-    credentials: true,
+    credentials: allowedOrigin !== "*",
   },
 });
 
